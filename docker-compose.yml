@@ -1,0 +1,22 @@
+version: "3"
+services:
+  front:
+    build: .
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./:/usr/src/app
+    ports:
+      - 8000:8000
+    networks:
+      - english-learner-network
+    tty: true
+    command: sh -c 'npm start'
+
+volumes:
+  bundle-volume:
+  db-data:
+
+networks:
+  english-learner-network:
+    external: true
