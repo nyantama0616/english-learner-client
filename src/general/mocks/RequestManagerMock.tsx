@@ -25,14 +25,26 @@ function getData(url: string) {
                     {
                         id: 1,
                         word: 'apple',
+                        realFrequency: 100,
+                        statFrequency: 100,
+                        pronunciation: 'apple',
+                        meaning: 'りんご',
                     },
                     {
                         id: 2,
                         word: 'banana',
+                        realFrequency: 100,
+                        statFrequency: 100,
+                        pronunciation: 'apple',
+                        meaning: 'ばなな',
                     },
                     {
                         id: 3,
                         word: 'orange',
+                        realFrequency: 100,
+                        statFrequency: 100,
+                        pronunciation: 'apple',
+                        meaning: 'おれんじ',
                     }
                 ]
             }
