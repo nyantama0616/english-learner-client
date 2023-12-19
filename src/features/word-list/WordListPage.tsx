@@ -10,21 +10,25 @@ interface WordListPageProps {
 export default function WordListPage({ sx }: WordListPageProps) {
     const hook = useDependency().wordListHook;
     const wordViewer = hook.selectedWordPos !== null ?
-        <WordViewer word={hook.fetchWords.words[hook.selectedWordPos]} sx={{
-            backgroundColor: "lightblue",
-            width: "194%",
-            height: "800px",
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-        }} />
+        <WordViewer
+            word={hook.fetchWords.words[hook.selectedWordPos]}
+            onClose={hook.closeWordViewer}
+            sx={{
+                backgroundColor: "lightblue",
+                width: "194%",
+                height: "800px",
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+            }}
+        />
         : null;
     
     return (
         <PageTemplate className="home-page" sx={{ ...sx, position: "relative" }}>
             <h1>Word List</h1>
-            <WordList words={ hook.fetchWords.words } sx={{ backgroundColor: "#eeeeee" }} />
+            <WordList words={ hook.fetchWords.words } onSelectWord={ hook.selectWord } sx={{ backgroundColor: "#eeeeee" }} />
             { wordViewer }
         </PageTemplate>
     )

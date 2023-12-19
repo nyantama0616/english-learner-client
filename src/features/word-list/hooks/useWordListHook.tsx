@@ -8,11 +8,20 @@ export default function useWordList(fetchWords: IFetchWords): IWordListHook {
 
     useEffect(() => {
         fetchWords.fetch();
-        setSelectedWordPos(0);
     }, []);
+
+    function selectWord(pos: number) {
+        setSelectedWordPos(pos);
+    }
+
+    function closeWordViewer() {
+        setSelectedWordPos(null);
+    }
 
     return {
         fetchWords,
         selectedWordPos,
+        selectWord,
+        closeWordViewer,
     }
 }

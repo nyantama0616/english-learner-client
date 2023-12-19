@@ -5,10 +5,11 @@ import IWord from "../../../general/interfaces/IWord";
 
 interface WordListProps {
     words: IWord[]
+    onSelectWord: (pos: number) => void;
     sx?: SxProps;
 }
-export default function WordList({ words, sx }: WordListProps) {
-    const items = words.map((word, i) => <WordListItem key={i.toString()} wordName={word.word} />);
+export default function WordList({ words, onSelectWord, sx }: WordListProps) {
+    const items = words.map((word, i) => <WordListItem key={i.toString()} wordName={word.word} onClick={ () => {onSelectWord(i)} } />);
 
     return (
         <Box sx={{...sx}}>
