@@ -4,8 +4,9 @@ import IWordListHook from "../interfaces/IWordListHook";
 import { useState } from "react";
 import { useHotkeys } from 'react-hotkeys-hook'
 import IWordInfoEditorHook from "../interfaces/IWordInfoEditorHook";
+import IUpdateWords from "../interfaces/IUpdateWords";
 
-export default function useWordList(fetchWords: IFetchWords, wordInfoEditorHook: IWordInfoEditorHook): IWordListHook {
+export default function useWordList(fetchWords: IFetchWords, wordInfoEditorHook: IWordInfoEditorHook, updateWords: IUpdateWords): IWordListHook {
     const [selectedWordPos, setSelectedWordPos] = useState<number | null>(null);
     useHotkeys('up', () => _selectPrevWord(), [selectedWordPos]); //TODO: 第２引数はどういう意味？, ショートカットを管理するクラスを作る
     useHotkeys('down', () => _selectNextWord(), [selectedWordPos]);
@@ -15,6 +16,10 @@ export default function useWordList(fetchWords: IFetchWords, wordInfoEditorHook:
     }, []);
 
     function selectWord(pos: number | null) {
+        if (!wordInfoEditorHook.isValid()) return; //validationに引っかかったら何もしない
+
+        if (wordInfoEditorHook.edited) updateWords.push(wordInfoEditorHook.data);
+
         if (pos === null) {
             setSelectedWordPos(null);
             return;
@@ -42,6 +47,7 @@ export default function useWordList(fetchWords: IFetchWords, wordInfoEditorHook:
 
     function closeWordViewer() {
         selectWord(null);
+        updateWords.update();
     }
 
     return {

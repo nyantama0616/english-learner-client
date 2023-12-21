@@ -15,6 +15,16 @@ export default class RequestManagerMock<Request, Response> implements IRequestMa
             reject(null);
         });
     }
+
+    public async patch(url: string, data?: Request): Promise<Response | null> {
+        return new Promise<Response | null>((resolve, reject) => {
+            if (url === requests.updateWords) {
+                console.log('updateWords!');
+                console.log(data);
+            }
+            resolve(null);
+        });
+    }
 }
 
 function getData(url: string) {
