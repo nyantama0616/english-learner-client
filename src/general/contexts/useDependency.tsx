@@ -7,13 +7,17 @@ import FetchWordsRequest from '../../features/word-list/types/FetchWordsRequest'
 import FetchWordsResponse from '../../features/word-list/types/FetchWordsResponse';
 import IWordListHook from '../../features/word-list/interfaces/IWordListHook';
 import useWordListHook from '../../features/word-list/hooks/useWordListHook';
+import IWordInfoEditorHook from '../../features/word-list/interfaces/IWordInfoEditorHook';
+import useWordInfoEditorHook from '../../features/word-list/hooks/useWordInfoEditorHook';
 
 interface DependencyContextType {
     wordListHook: IWordListHook;
+    wordInfoEditorHook: IWordInfoEditorHook;
 }
 
 const initialValue: DependencyContextType = {
     wordListHook: null!,
+    wordInfoEditorHook: null!,
 }
 
 const DependencyContext = createContext<DependencyContextType>(initialValue);
@@ -28,10 +32,12 @@ interface DependencyProviderProps {
 export function DependencyProvider({ children }: DependencyProviderProps) {
     const requestManager = new RequestManagerMock<FetchWordsRequest, FetchWordsResponse>();
     const fetchWords = useFetchWords(requestManager);
-    const wordListHook = useWordListHook(fetchWords);
+    const wordInfoEditorHook = useWordInfoEditorHook();
+    const wordListHook = useWordListHook(fetchWords, wordInfoEditorHook);
 
     const value: DependencyContextType = {
         wordListHook,
+        wordInfoEditorHook,
     }
     
     return (

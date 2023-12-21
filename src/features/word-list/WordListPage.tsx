@@ -13,6 +13,7 @@ export default function WordListPage({ sx }: WordListPageProps) {
         <WordViewer
             word={hook.fetchWords.words[hook.selectedWordPos]}
             onClose={hook.closeWordViewer}
+            wordInfoEditorHook={hook.wordInfoEditorHook}
             sx={{
                 backgroundColor: "lightblue",
                 width: "194%",
