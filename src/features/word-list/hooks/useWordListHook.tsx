@@ -12,7 +12,11 @@ export default function useWordList(fetchWords: IFetchWords, wordInfoEditorHook:
     useHotkeys('down', () => _selectNextWord(), [selectedWordPos]);
 
     useEffect(() => {
-        fetchWords.fetch();
+        const params = {
+            limit: 10,
+            minStatFrequency: 2.0,
+        }
+        fetchWords.fetch(params);
     }, []);
 
     function selectWord(pos: number | null) {

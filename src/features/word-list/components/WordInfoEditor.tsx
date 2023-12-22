@@ -18,6 +18,10 @@ export default function WordInfoEditor({ word, hook, sx }: WordInfoEditorProps) 
                 </Grid>
                 
                 <Grid item xs={10}>
+                    <h3>{word.statFrequency}</h3>
+                </Grid>
+                
+                <Grid item xs={10}>
                     <form>
                         <TextField
                             label="意味"

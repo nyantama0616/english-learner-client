@@ -1,7 +1,6 @@
-import IWord from "../../../general/interfaces/IWord"
-
 export type FetchWordsRequest = {
-
+    limit?: number;
+    minStatFrequency?: number;
 }
 
 export default FetchWordsRequest;

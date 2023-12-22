@@ -11,10 +11,10 @@ export default function useFetchWords(requestManager: IRequestManager<FetchWords
     const [status, setStatus] = useState(BasicStatus.Idle);
     const [words, setWords] = useState<IWord[]>([]);
 
-    async function fetch() {
+    async function fetch(params: FetchWordsRequest) {
         setStatus(BasicStatus.Doing);
         await requestManager
-            .get(requests.fetchWords, {})
+            .get(requests.fetchWords, params)
             .then((res) => {
                 setWords(res!.words);
                 setStatus(BasicStatus.Success);
