@@ -7,13 +7,15 @@ export default class Word implements IWord {
     statFrequency: number;
     pronunciation: string;
     meaning: string;
+    reported: boolean;
 
-    constructor(id: number, word: string, realFrequency: number, statFrequency: number, pronunciation: string, meaning: string) {
+    constructor(id: number, word: string, realFrequency: number, statFrequency: number, pronunciation: string, meaning: string, reported: boolean) {
         this.id = id;
         this.word = word;
         this.realFrequency = realFrequency;
         this.statFrequency = statFrequency;
         this.pronunciation = pronunciation;
         this.meaning = meaning;
+        this.reported = reported;
     }
 }

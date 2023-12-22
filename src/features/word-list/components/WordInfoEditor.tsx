@@ -1,4 +1,4 @@
-import { Box, Grid, TextField } from "@mui/material";
+import { Box, Grid, TextField, Checkbox } from "@mui/material";
 import { SxProps } from "@mui/system";
 import { useEffect } from "react";
 import IWord from "../../../general/interfaces/IWord";
@@ -19,6 +19,13 @@ export default function WordInfoEditor({ word, hook, sx }: WordInfoEditorProps) 
                 
                 <Grid item xs={10}>
                     <h3>{word.statFrequency}</h3>
+                </Grid>
+                
+                <Grid item xs={2}>
+                    <Checkbox
+                        checked={hook.data.reported}
+                        onChange={hook.onReportedChange}
+                    />
                 </Grid>
                 
                 <Grid item xs={10}>

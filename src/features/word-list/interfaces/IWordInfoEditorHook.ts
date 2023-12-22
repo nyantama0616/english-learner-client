@@ -5,6 +5,7 @@ import React from "react";
 export default interface WordInfoEditorHook {
     data: WordInfoEditorData;
     onMeaningChange: React.ChangeEventHandler<HTMLInputElement>;
+    onReportedChange: React.ChangeEventHandler<HTMLInputElement>;
     init(word: IWord): void;
     isValid(): boolean;
     edited: boolean;

@@ -5,4 +5,5 @@ export default interface IWord {
     statFrequency: number;
     pronunciation: string;
     meaning: string;
+    reported: boolean;
 }

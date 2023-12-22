@@ -6,6 +6,7 @@ import { useState } from "react";
 const initialData: WordInfoEditorData = {
     wordId: -1,
     meaning: "",
+    reported: false,
 }
 
 interface State {
@@ -27,12 +28,22 @@ export default function useWordInfoEditor(): WordInfoEditorHook {
         });
     }
 
+    function onReportedChange(e: React.ChangeEvent<HTMLInputElement>) {
+        const value = e.target.checked;
+
+        setState({
+            edited: true,
+            data: {...data , reported: value},
+        });
+    }
+
     function init(word: IWord) {
         setState({
             edited: false,
             data: {
                 wordId: word.id,
                 meaning: word.meaning,
+                reported: word.reported,
             }
         });
     }
@@ -45,6 +56,7 @@ export default function useWordInfoEditor(): WordInfoEditorHook {
     return {
         data,
         onMeaningChange,
+        onReportedChange,
         init,
         isValid,
         edited,
