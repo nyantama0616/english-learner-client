@@ -4,17 +4,13 @@ import axios from 'axios';
 
 export default class RequestManager<Request, Response> implements IRequestManager<Request, Response> {
     public async get(url: string, data?: Request): Promise<Response | null> {
-        console.log("get");
-        console.log(url);
-        
-        
         return new Promise<Response | null>((resolve, reject) => {
             axios.get(url, { params: data })
                 .then((res) => {
                     resolve(res.data);
                 })
                 .catch((error) => {
-                    reject(error);
+                    reject(null);
                 });
         });
     }
@@ -27,7 +23,13 @@ export default class RequestManager<Request, Response> implements IRequestManage
 
     public async patch(url: string, data?: Request): Promise<Response | null> {
         return new Promise<Response | null>((resolve, reject) => {
-            resolve(null);
+            axios.patch(url, data)
+                .then((res) => {
+                    resolve(res.data);
+                })
+                .catch((error) => {
+                    reject(null);
+                });
         });
     }
 }

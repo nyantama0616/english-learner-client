@@ -8,21 +8,24 @@ import IUpdateWords from "../interfaces/IUpdateWords";
 
 export default function useWordList(fetchWords: IFetchWords, wordInfoEditorHook: IWordInfoEditorHook, updateWords: IUpdateWords): IWordListHook {
     const [selectedWordPos, setSelectedWordPos] = useState<number | null>(null);
-    useHotkeys('up', () => _selectPrevWord(), [selectedWordPos]); //TODO: 第２引数はどういう意味？, ショートカットを管理するクラスを作る
-    useHotkeys('down', () => _selectNextWord(), [selectedWordPos]);
+    useHotkeys('up', _selectPrevWord, [selectedWordPos, wordInfoEditorHook]); //TODO: 第２引数はどういう意味？, ショートカットを管理するクラスを作る
+    useHotkeys('down', _selectNextWord, [selectedWordPos, wordInfoEditorHook]);
 
     useEffect(() => {
-        const params = {
-            limit: 10,
-            minStatFrequency: 2.0,
-        }
-        fetchWords.fetch(params);
+        _fetch();
     }, []);
 
-    function selectWord(pos: number | null) {
+    const selectWord = function(pos: number | null) {
         if (!wordInfoEditorHook.isValid()) return; //validationに引っかかったら何もしない
-
-        if (wordInfoEditorHook.edited) updateWords.push(wordInfoEditorHook.data);
+        
+        if (wordInfoEditorHook.edited) {
+            updateWords.push({ ...wordInfoEditorHook.data });
+            updateWords
+                .update()
+                .then(() => {
+                    _fetch();
+                });
+        }
 
         if (pos === null) {
             setSelectedWordPos(null);
@@ -35,7 +38,7 @@ export default function useWordList(fetchWords: IFetchWords, wordInfoEditorHook:
 
         const word = fetchWords.words[pos];
         
-        wordInfoEditorHook.init(word);
+        wordInfoEditorHook.init({ ...word });
         setSelectedWordPos(pos);
     }
 
@@ -51,7 +54,14 @@ export default function useWordList(fetchWords: IFetchWords, wordInfoEditorHook:
 
     function closeWordViewer() {
         selectWord(null);
-        updateWords.update();
+    }
+
+    function _fetch() {
+        const params = {
+            limit: 20,
+            minStatFrequency: 2.0,
+        }
+        fetchWords.fetch(params);
     }
 
     return {

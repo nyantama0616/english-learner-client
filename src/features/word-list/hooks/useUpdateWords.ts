@@ -3,19 +3,19 @@ import WordInfoEditorData from "../types/WordInfoEditorData";
 import { useRef, useState } from "react";
 import BasicStatus from "../../../general/types/BasicStatus";
 import UpdateWordsRequest from "../types/UpdateWordsRequest";
-import UpdateWordsResponse from "../types/UpdatewordsResponse";
+import UpdateWordsResponse from "../types/UpdateWordsResponse";
 import IRequestManager from "../../../general/interfaces/IRequestManager";
 import requests from "../../../general/requests";
 
 type Datum = { [wordId: number]: WordInfoEditorData };
 
-export default function useUpdateWordsMock(requestManager: IRequestManager<UpdateWordsRequest, UpdateWordsResponse>): IUpdateWords {
+export default function useUpdateWords(requestManager: IRequestManager<UpdateWordsRequest, UpdateWordsResponse>): IUpdateWords {
     const [status, setStatus] = useState(BasicStatus.Idle);
     const datumRef = useRef<Datum>({});
 
-    function update() {
+    async function update() {
         setStatus(BasicStatus.Doing);
-        requestManager
+        await requestManager
             .patch(requests.updateWords, { datum: Object.values(datumRef.current) })
             .then(() => {
                 setStatus(BasicStatus.Success);
