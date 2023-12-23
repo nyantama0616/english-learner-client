@@ -9,7 +9,7 @@ interface Selected {
     pos: number | null;
     article: IArticle | null;
 }
-export default function useArticleList(fetchArticles: IFetchArticles, fetchOneArticle: IFetchOneArticle): IArticleListHook {
+export default function useArticleListHook(fetchArticles: IFetchArticles, fetchOneArticle: IFetchOneArticle): IArticleListHook {
     const [selected, setSelected] = useState<Selected>({ pos: null, article: null });
 
     useHotkeys('up', _selectPrevArticle, [selected]); //TODO: 第２引数はどういう意味？, ショートカットを管理するクラスを作る
