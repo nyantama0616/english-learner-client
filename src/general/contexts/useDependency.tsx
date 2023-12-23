@@ -14,14 +14,22 @@ import RequestManager from '../classes/RequestManager';
 import UpdateWordsRequest from '../../features/word-list/types/UpdateWordsRequest';
 import UpdateWordsResponse from '../../features/word-list/types/UpdateWordsResponse';
 
+import IArticleListHook from '../../features/article/interfaces/IArticleListHook';
+import useArticleListHook from '../../features/article/hooks/useArticleListHook';
+import FetchArticlesRequest from '../../features/article/types/FetchArticlesRequest';
+import FetchArticlesResponse from '../../features/article/types/FetchArticlesResponse';
+import useFetchArticles from '../../features/article/hooks/useFetchArticles';
+
 interface DependencyContextType {
     wordListHook: IWordListHook;
     wordInfoEditorHook: IWordInfoEditorHook;
+    articleListHook: IArticleListHook;
 }
 
 const initialValue: DependencyContextType = {
     wordListHook: null!,
     wordInfoEditorHook: null!,
+    articleListHook: null!,
 }
 
 const DependencyContext = createContext<DependencyContextType>(initialValue);
@@ -42,9 +50,14 @@ export function DependencyProvider({ children }: DependencyProviderProps) {
     const updateWords = useUpdateWords(updateRequestManager);
     const wordListHook = useWordListHook(fetchWords, wordInfoEditorHook, updateWords);
 
+    const fetchArticleRequestManager = new RequestManager<FetchArticlesRequest, FetchArticlesResponse>();
+    const fetchArticleWords = useFetchArticles(fetchArticleRequestManager);
+    const articleListHook = useArticleListHook(fetchArticleWords);
+
     const value: DependencyContextType = {
         wordListHook,
         wordInfoEditorHook,
+        articleListHook,
     }
     
     return (

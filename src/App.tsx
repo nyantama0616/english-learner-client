@@ -4,6 +4,8 @@ import Layout from './general/Layout';
 
 import HomePage from './features/home/HomePage';
 import WordListPage from './features/word-list/WordListPage';
+import ArticleListPage from './features/article/ArticleListPage';
+
 import { DependencyProvider } from './general/contexts/useDependency';
 
 import './App.css';
@@ -16,7 +18,8 @@ function App() {
             <Router>
               <Routes>
                 <Route path="/" element={<HomePage/>} />
-                <Route path="/word-list" element={<WordListPage/>} />
+                <Route path="/word-list" element={<WordListPage />} />
+                <Route path="article-list" element={<ArticleListPage />} />
               </Routes>
             </Router>
           </Layout>
