@@ -79,13 +79,13 @@ describe('useArticleListHook', () => {
         await act(async () => {
             result.current.openCreateArticle();
         });
-        expect(result.current.displayCreateArticle).toEqual(true);
+        expect(result.current.displayFlag.createArticle).toEqual(true);
     });
 
     test('closeCreateArticle', async () => {
         await act(async () => {
             result.current.closeCreateArticle();
         });
-        expect(result.current.displayCreateArticle).toEqual(false);
+        expect(result.current.displayFlag.createArticle).toEqual(false);
     });
 });

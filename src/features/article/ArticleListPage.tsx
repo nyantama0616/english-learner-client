@@ -15,7 +15,7 @@ interface ArticleListPageProps {
 export default function ArticleListPage({ sx }: ArticleListPageProps) {
     const hook = useDependency().articleListHook;
 
-    const articleComponent = hook.selectedArticlePos !== null && hook.selectedArticle !== null
+    const articleComponent = hook.displayFlag.article && hook.selectedArticle
         ? <ArticleWrapper
             article={hook.selectedArticle}
             onClose={hook.closeArticle}
@@ -31,7 +31,7 @@ export default function ArticleListPage({ sx }: ArticleListPageProps) {
         />
         : null;
     
-    const createArticleComponent = hook.displayCreateArticle
+    const createArticleComponent = hook.displayFlag.createArticle
         ? <CreateArticleWrapper
             createArticle={hook.createArticle}
             onClose={hook.closeCreateArticle}
@@ -47,7 +47,7 @@ export default function ArticleListPage({ sx }: ArticleListPageProps) {
         />
         : null;
     
-    const openCreateArticleButton = !hook.displayCreateArticle
+    const openCreateArticleButton = !hook.displayFlag.createArticle && !hook.displayFlag.article
         ? <Button variant="contained" onClick={hook.openCreateArticle}>New</Button>
         : null
     

@@ -80,7 +80,10 @@ export default function useArticleListHook(fetchArticles: IFetchArticles, fetchO
         selectedArticlePos: state.selected.pos,
         selectedArticle: fetchOneArticle.article,
         closeArticle,
-        displayCreateArticle: state.displayCreateArticle,
+        displayFlag: {
+            article: state.selected.pos !== null && state.selected.article !== null,
+            createArticle: state.displayCreateArticle,
+        },
         openCreateArticle,
         closeCreateArticle,
     }

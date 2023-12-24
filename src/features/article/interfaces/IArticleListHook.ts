@@ -9,7 +9,10 @@ export default interface IArticleListHook {
     selectedArticlePos: number | null;
     selectedArticle: IArticle | null;
     closeArticle: () => void;
-    displayCreateArticle: boolean;
     openCreateArticle: () => void;
     closeCreateArticle: () => void;
+    displayFlag: {
+        article: boolean;
+        createArticle: boolean;
+    }
 }
