@@ -4,12 +4,13 @@ import IFetchArticles from "../interfaces/IFetchArticles";
 import { useHotkeys } from "react-hotkeys-hook";
 import IFetchOneArticle from "../interfaces/IFetchOneArticle";
 import IArticle from "../../../general/interfaces/IArticle";
+import ICreateArticle from "../interfaces/ICreateArticle";
 
 interface Selected {
     pos: number | null;
     article: IArticle | null;
 }
-export default function useArticleListHook(fetchArticles: IFetchArticles, fetchOneArticle: IFetchOneArticle): IArticleListHook {
+export default function useArticleListHook(fetchArticles: IFetchArticles, fetchOneArticle: IFetchOneArticle, createArticle: ICreateArticle): IArticleListHook {
     const [selected, setSelected] = useState<Selected>({ pos: null, article: null });
 
     /*TODO:
@@ -53,6 +54,7 @@ export default function useArticleListHook(fetchArticles: IFetchArticles, fetchO
     
     return {
         fetchArticles,
+        createArticle,
         selectArticle,
         selectedArticlePos: selected.pos,
         selectedArticle: fetchOneArticle.article,

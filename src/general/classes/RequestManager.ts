@@ -17,7 +17,13 @@ export default class RequestManager<Request, Response> implements IRequestManage
 
     public async post(url: string, data?: Request): Promise<Response | null> {
         return new Promise<Response | null>((resolve, reject) => {
-            reject(null);
+            axios.post(url, data)
+                .then((res) => {
+                    resolve(res.data);
+                })
+                .catch((error) => {
+                    reject(null);
+                });
         });
     }
 

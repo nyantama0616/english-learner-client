@@ -4,10 +4,13 @@ import RequestManagerMock from "../../../../general/mocks/RequestManagerMock";
 import { act } from "react-dom/test-utils";
 import useFetchArticles from "../useFetchArticles";
 import useFetchOneArticle from "../useFetchOneArticle";
+import useCreateArticle from "../useCreateArticle";
 import FetchOneArticleRequest from "../../types/FetchOneArticleRequest";
 import FetchArticlesRequest from "../../types/FetchArticlesRequest";
 import FetchArticlesResponse from "../../types/FetchArticlesResponse";
 import FetchOneArticleResponse from "../../types/FetchOneArticleResponse";
+import CreateArticleRequest from "../../types/CreateArticleRequest";
+import CreateArticleResponse from "../../types/CreateArticleResponse";
 import IArticleListHook from "../../interfaces/IArticleListHook";
 
 describe('useArticleListHook', () => {
@@ -16,9 +19,11 @@ describe('useArticleListHook', () => {
         result = renderHook(() => {
             const fetchArticlesRequestManager = new RequestManagerMock<FetchArticlesRequest, FetchArticlesResponse>();
             const fetchOneArticleRequestManager = new RequestManagerMock<FetchOneArticleRequest, FetchOneArticleResponse>();
+            const createArticleRequestManager = new RequestManagerMock<CreateArticleRequest, CreateArticleResponse>();
             const fetchArticles = useFetchArticles(fetchArticlesRequestManager);
             const fetchOneArticle = useFetchOneArticle(fetchOneArticleRequestManager);
-            return useArticleListHook(fetchArticles, fetchOneArticle)
+            const createArticle = useCreateArticle(createArticleRequestManager);
+            return useArticleListHook(fetchArticles, fetchOneArticle, createArticle);
         }).result;
 
         await act(async () => {

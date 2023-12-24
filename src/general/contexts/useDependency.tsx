@@ -22,6 +22,9 @@ import useFetchArticles from '../../features/article/hooks/useFetchArticles';
 import useFetchOneArticle from '../../features/article/hooks/useFetchOneArticle';
 import FetchOneArticleRequest from '../../features/article/types/FetchOneArticleRequest';
 import FetchOneArticleResponse from '../../features/article/types/FetchOneArticleResponse';
+import useCreateArticle from '../../features/article/hooks/useCreateArticle';
+import CreateArticleRequest from '../../features/article/types/CreateArticleRequest';
+import CreateArticleResponse from '../../features/article/types/CreateArticleResponse';
 
 interface DependencyContextType {
     wordListHook: IWordListHook;
@@ -57,7 +60,9 @@ export function DependencyProvider({ children }: DependencyProviderProps) {
     const fetchArticleWords = useFetchArticles(fetchArticleRequestManager);
     const fetchOneArticleRequestManager = new RequestManager<FetchOneArticleRequest, FetchOneArticleResponse>();
     const fetchOneArticle = useFetchOneArticle(fetchOneArticleRequestManager);
-    const articleListHook = useArticleListHook(fetchArticleWords, fetchOneArticle);
+    const createArticleRequestManager = new RequestManager<CreateArticleRequest, CreateArticleResponse>();
+    const createArticle = useCreateArticle(createArticleRequestManager);
+    const articleListHook = useArticleListHook(fetchArticleWords, fetchOneArticle, createArticle);
 
     const value: DependencyContextType = {
         wordListHook,
