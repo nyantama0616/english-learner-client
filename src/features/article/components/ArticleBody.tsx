@@ -26,9 +26,6 @@ export default function ArticleBody({ body, sx }: ArticleBodyProps) {
                 type = "body1";
             }
 
-            console.log(text, type);
-            
-
             return { text, type };
         });
     }, [body]);

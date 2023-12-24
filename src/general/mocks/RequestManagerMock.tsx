@@ -18,10 +18,6 @@ export default class RequestManagerMock<Request, Response> implements IRequestMa
 
     public async patch(url: string, data?: Request): Promise<Response | null> {
         return new Promise<Response | null>((resolve, reject) => {
-            if (url === requests.updateWords) {
-                console.log('updateWords!');
-                console.log(data);
-            }
             resolve(null);
         });
     }
@@ -74,6 +70,13 @@ function getData(url: string) {
                 title: 'title1',
                 body: 'body1',
                 wordCount: 1
+            }
+        
+        case requests.fetchArticleWords(1):
+            return {
+                words: {
+                    "apple": { id: 0, word: 'apple', realFrequency: 100, statFrequency: 100, pronunciation: 'apple', meaning: 'りんご' },
+                }
             }
     }
 }

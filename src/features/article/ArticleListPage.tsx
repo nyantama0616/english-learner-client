@@ -15,9 +15,9 @@ interface ArticleListPageProps {
 export default function ArticleListPage({ sx }: ArticleListPageProps) {
     const hook = useDependency().articleListHook;
 
-    const articleComponent = hook.displayFlag.article && hook.selectedArticle
+    const articleComponent = hook.displayFlag.article && hook.selected.data.article
         ? <ArticleWrapper
-            article={hook.selectedArticle}
+            article={hook.selected.data.article}
             onClose={hook.closeArticle}
             sx={{
                 width: '120%',

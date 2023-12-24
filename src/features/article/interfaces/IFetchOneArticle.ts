@@ -1,8 +1,16 @@
 import IArticle from "../../../general/interfaces/IArticle";
 import BasicStatus from "../../../general/types/BasicStatus";
+import IWord from "../../../general/interfaces/IWord";
 
 export default interface IFetchOneArticle {
     status: BasicStatus;
-    article: IArticle | null;
+    data: Data;
     fetch(id: number): Promise<void>;
+}
+
+export type Data = {
+    article: IArticle | null;
+    words: {
+        [word: string]: IWord;
+    };
 }

@@ -5,12 +5,6 @@ import { act } from "react-dom/test-utils";
 import useFetchArticles from "../useFetchArticles";
 import useFetchOneArticle from "../useFetchOneArticle";
 import useCreateArticle from "../useCreateArticle";
-import FetchOneArticleRequest from "../../types/FetchOneArticleRequest";
-import FetchArticlesRequest from "../../types/FetchArticlesRequest";
-import FetchArticlesResponse from "../../types/FetchArticlesResponse";
-import FetchOneArticleResponse from "../../types/FetchOneArticleResponse";
-import CreateArticleRequest from "../../types/CreateArticleRequest";
-import CreateArticleResponse from "../../types/CreateArticleResponse";
 import IArticleListHook from "../../interfaces/IArticleListHook";
 
 describe('useArticleListHook', () => {
@@ -18,7 +12,7 @@ describe('useArticleListHook', () => {
     beforeEach(async () => {
         result = renderHook(() => {
             const fetchArticles = useFetchArticles(RequestManagerMock);
-            const fetchOneArticle = useFetchOneArticle(RequestManagerMock);
+            const fetchOneArticle = useFetchOneArticle(RequestManagerMock, RequestManagerMock);
             const createArticle = useCreateArticle(RequestManagerMock);
             return useArticleListHook(fetchArticles, fetchOneArticle, createArticle);
         }).result;
@@ -41,13 +35,17 @@ describe('useArticleListHook', () => {
             result.current.selectArticle(1);
         });
         
-        expect(result.current.selectedArticlePos).toEqual(1);
-        expect(result.current.selectedArticle).toEqual({ id: 1, title: 'title1', body: 'body1', wordCount: 1 });
+        expect(result.current.selected.pos).toEqual(1);
+        expect(result.current.selected.data.article).toEqual({ id: 1, title: 'title1', body: 'body1', wordCount: 1 });
+        expect(result.current.selected.data.words).toEqual({
+            "apple": { id: 0, word: 'apple', realFrequency: 100, statFrequency: 100, pronunciation: 'apple', meaning: 'りんご' },
+        });
+
         
         await act(async () => {
             result.current.selectArticle(null);
         });
-        expect(result.current.selectedArticlePos).toEqual(null);
+        expect(result.current.selected.pos).toEqual(null);
     });
 
     test('closeArticle', async () => {
@@ -55,21 +53,21 @@ describe('useArticleListHook', () => {
             result.current.closeArticle();
         });
         
-        expect(result.current.selectedArticlePos).toEqual(null);
+        expect(result.current.selected.pos).toEqual(null);
     });
 
     test('selectArticle with invalid pos', async () => {
-        const prevPos = result.current.selectedArticlePos;
+        const prevPos = result.current.selected.pos;
 
         await act(async () => {
             result.current.selectArticle(999);
         });
-        expect(result.current.selectedArticlePos).toEqual(prevPos);
+        expect(result.current.selected.pos).toEqual(prevPos);
         
         await act(async () => {
             result.current.selectArticle(-999);
         });
-        expect(result.current.selectedArticlePos).toEqual(prevPos);
+        expect(result.current.selected.pos).toEqual(prevPos);
     });
 
     test('openCreateArticle', async () => {

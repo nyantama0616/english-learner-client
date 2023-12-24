@@ -6,21 +6,14 @@ import IFetchOneArticle from "../interfaces/IFetchOneArticle";
 import IArticle from "../../../general/interfaces/IArticle";
 import ICreateArticle from "../interfaces/ICreateArticle";
 
-interface Selected {
-    pos: number | null;
-    article: IArticle | null;
-}
 interface State {
     displayCreateArticle: boolean;
-    selected: Selected;
+    selectedArticlePos: number | null;
 }
 
 const initialState: State = {
     displayCreateArticle: false,
-    selected: {
-        pos: null,
-        article: null
-    }
+    selectedArticlePos: null,
 }
 export default function useArticleListHook(fetchArticles: IFetchArticles, fetchOneArticle: IFetchOneArticle, createArticle: ICreateArticle): IArticleListHook {
     const [state, setState] = useState<State>(initialState);
@@ -29,8 +22,8 @@ export default function useArticleListHook(fetchArticles: IFetchArticles, fetchO
         ここでショートカットを登録するのはおかしい気がする
         Component側で登録するべきだと思う
     */
-    useHotkeys('up', _selectPrevArticle, [state.selected]); //TODO: 第２引数はどういう意味？, ショートカットを管理するクラスを作る
-    useHotkeys('down', _selectNextArticle, [state.selected]);
+    useHotkeys('up', _selectPrevArticle, [state.selectedArticlePos]); //TODO: 第２引数はどういう意味？, ショートカットを管理するクラスを作る
+    useHotkeys('down', _selectNextArticle, [state.selectedArticlePos]);
 
     useEffect(() => {
         fetchArticles.fetch();
@@ -39,26 +32,26 @@ export default function useArticleListHook(fetchArticles: IFetchArticles, fetchO
     function selectArticle(pos: number | null) {
                 if (pos === null) {
             // setSelected({ pos: null, article: null });
-            setState({ ...state, selected: { pos: null, article: null } });
+            setState({ ...state, selectedArticlePos: null });
             return;
         }
         const article = fetchArticles.articles[pos];
         if (article === undefined) return;
 
-        setState({ ...state, selected: { pos, article } });
+        setState({ ...state, selectedArticlePos: pos });
 
         fetchOneArticle
             .fetch(article.id);
     }
 
     function _selectPrevArticle() {
-        if (state.selected.pos === null || state.selected.pos <= 0) return;
-        selectArticle(state.selected.pos - 1);
+        if (state.selectedArticlePos === null || state.selectedArticlePos <= 0) return;
+        selectArticle(state.selectedArticlePos - 1);
     }
 
     function _selectNextArticle() {
-        if (state.selected.pos === null || state.selected.pos >= fetchArticles.articles.length - 1) return;
-        selectArticle(state.selected.pos + 1);
+        if (state.selectedArticlePos === null || state.selectedArticlePos >= fetchArticles.articles.length - 1) return;
+        selectArticle(state.selectedArticlePos + 1);
     }
 
     function closeArticle() {
@@ -77,11 +70,13 @@ export default function useArticleListHook(fetchArticles: IFetchArticles, fetchO
         fetchArticles,
         createArticle,
         selectArticle,
-        selectedArticlePos: state.selected.pos,
-        selectedArticle: fetchOneArticle.article,
+        selected: {
+            pos: state.selectedArticlePos,
+            data: fetchOneArticle.data,
+        },
         closeArticle,
         displayFlag: {
-            article: state.selected.pos !== null && state.selected.article !== null,
+            article: state.selectedArticlePos !== null && fetchOneArticle.data.article !== null,
             createArticle: state.displayCreateArticle,
         },
         openCreateArticle,
