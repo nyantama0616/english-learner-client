@@ -5,10 +5,14 @@ import requests from "../../../general/requests";
 import FetchOneArticleRequest from "../types/FetchOneArticleRequest";
 import FetchOneArticleResponse from "../types/FetchOneArticleResponse";
 import IArticle from "../../../general/interfaces/IArticle";
-
-export default function useFetchOneArticle(requestManager: IRequestManager<FetchOneArticleRequest, FetchOneArticleResponse>) {
+export default function useFetchOneArticle<
+    T extends new () => IRequestManager<FetchOneArticleRequest, FetchOneArticleResponse>
+>(
+    FetchOneRequestManager: T
+) {
     const [status, setStatus] = useState(BasicStatus.Idle);
     const [article, setArticle] = useState<IArticle | null>(null);
+    const requestManager = new FetchOneRequestManager();
     
     async function fetch(id: number) {
         setStatus(BasicStatus.Doing);

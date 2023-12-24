@@ -17,12 +17,9 @@ describe('useArticleListHook', () => {
     let result: { current: IArticleListHook; } = null!;
     beforeEach(async () => {
         result = renderHook(() => {
-            const fetchArticlesRequestManager = new RequestManagerMock<FetchArticlesRequest, FetchArticlesResponse>();
-            const fetchOneArticleRequestManager = new RequestManagerMock<FetchOneArticleRequest, FetchOneArticleResponse>();
-            const createArticleRequestManager = new RequestManagerMock<CreateArticleRequest, CreateArticleResponse>();
-            const fetchArticles = useFetchArticles(fetchArticlesRequestManager);
-            const fetchOneArticle = useFetchOneArticle(fetchOneArticleRequestManager);
-            const createArticle = useCreateArticle(createArticleRequestManager);
+            const fetchArticles = useFetchArticles(RequestManagerMock);
+            const fetchOneArticle = useFetchOneArticle(RequestManagerMock);
+            const createArticle = useCreateArticle(RequestManagerMock);
             return useArticleListHook(fetchArticles, fetchOneArticle, createArticle);
         }).result;
 

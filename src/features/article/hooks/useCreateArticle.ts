@@ -8,9 +8,11 @@ import ICreateArticle from "../interfaces/ICreateArticle";
 
 const initialData: CreateArticleRequest = { title: "", body: "" };
 
-export default function useCreateArticle(requestManager: IRequestManager<CreateArticleRequest, CreateArticleResponse>): ICreateArticle {
+export default function useCreateArticle<T extends new () => IRequestManager<CreateArticleRequest, CreateArticleResponse>>(RequestManager: T): ICreateArticle {
     const [status, setStatus] = useState(BasicStatus.Idle);
     const [data, setData] = useState<CreateArticleRequest>(initialData);
+
+    const requestManager = new RequestManager();
 
     function onChangeTitle(e: React.ChangeEvent<HTMLInputElement>) {
         setData({ ...data, title: e.target.value });

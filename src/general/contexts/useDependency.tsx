@@ -1,7 +1,6 @@
 
 import { createContext, useContext } from 'react';
 import RequestManagerMock from '../mocks/RequestManagerMock';
-import IFetchWords from '../../features/word-list/interfaces/IFetchWords';
 import useFetchWords from '../../features/word-list/hooks/useFetchWords';
 import FetchWordsRequest from '../../features/word-list/types/FetchWordsRequest';
 import FetchWordsResponse from '../../features/word-list/types/FetchWordsResponse';
@@ -16,15 +15,9 @@ import UpdateWordsResponse from '../../features/word-list/types/UpdateWordsRespo
 
 import IArticleListHook from '../../features/article/interfaces/IArticleListHook';
 import useArticleListHook from '../../features/article/hooks/useArticleListHook';
-import FetchArticlesRequest from '../../features/article/types/FetchArticlesRequest';
-import FetchArticlesResponse from '../../features/article/types/FetchArticlesResponse';
 import useFetchArticles from '../../features/article/hooks/useFetchArticles';
 import useFetchOneArticle from '../../features/article/hooks/useFetchOneArticle';
-import FetchOneArticleRequest from '../../features/article/types/FetchOneArticleRequest';
-import FetchOneArticleResponse from '../../features/article/types/FetchOneArticleResponse';
 import useCreateArticle from '../../features/article/hooks/useCreateArticle';
-import CreateArticleRequest from '../../features/article/types/CreateArticleRequest';
-import CreateArticleResponse from '../../features/article/types/CreateArticleResponse';
 
 interface DependencyContextType {
     wordListHook: IWordListHook;
@@ -56,12 +49,9 @@ export function DependencyProvider({ children }: DependencyProviderProps) {
     const updateWords = useUpdateWords(updateRequestManager);
     const wordListHook = useWordListHook(fetchWords, wordInfoEditorHook, updateWords);
 
-    const fetchArticleRequestManager = new RequestManager<FetchArticlesRequest, FetchArticlesResponse>();
-    const fetchArticleWords = useFetchArticles(fetchArticleRequestManager);
-    const fetchOneArticleRequestManager = new RequestManager<FetchOneArticleRequest, FetchOneArticleResponse>();
-    const fetchOneArticle = useFetchOneArticle(fetchOneArticleRequestManager);
-    const createArticleRequestManager = new RequestManager<CreateArticleRequest, CreateArticleResponse>();
-    const createArticle = useCreateArticle(createArticleRequestManager);
+    const fetchArticleWords = useFetchArticles(RequestManager);
+    const fetchOneArticle = useFetchOneArticle(RequestManager);
+    const createArticle = useCreateArticle(RequestManager);
     const articleListHook = useArticleListHook(fetchArticleWords, fetchOneArticle, createArticle);
 
     const value: DependencyContextType = {
