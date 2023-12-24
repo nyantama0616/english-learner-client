@@ -74,4 +74,18 @@ describe('useArticleListHook', () => {
         });
         expect(result.current.selectedArticlePos).toEqual(prevPos);
     });
+
+    test('openCreateArticle', async () => {
+        await act(async () => {
+            result.current.openCreateArticle();
+        });
+        expect(result.current.displayCreateArticle).toEqual(true);
+    });
+
+    test('closeCreateArticle', async () => {
+        await act(async () => {
+            result.current.closeCreateArticle();
+        });
+        expect(result.current.displayCreateArticle).toEqual(false);
+    });
 });
