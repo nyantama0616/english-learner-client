@@ -20,7 +20,7 @@ export default function ArticleListPage({ sx }: ArticleListPageProps) {
             article={hook.selectedArticle}
             onClose={hook.closeArticle}
             sx={{
-                width: '80%',
+                width: '120%',
                 height: "800px",
                 position: "absolute",
                 top: "50%",
@@ -47,9 +47,9 @@ export default function ArticleListPage({ sx }: ArticleListPageProps) {
         />
         : null;
     
-    const openCreateArticleButton = hook.displayCreateArticle
-        ? null
-        : <Button variant="contained" onClick={hook.openCreateArticle}>New</Button>;
+    const openCreateArticleButton = !hook.displayCreateArticle
+        ? <Button variant="contained" onClick={hook.openCreateArticle}>New</Button>
+        : null
     
     return (
         <PageTemplate className="article-list-page" sx={{ ...sx, position: "relative" }}>
