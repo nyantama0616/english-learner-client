@@ -3,7 +3,7 @@ import IArticle from "../../../general/interfaces/IArticle";
 
 export default interface IArticleListHook {
     fetchArticles: IFetchArticles;
-    selectArticle: (pos: number | number) => void;
+    selectArticle: (pos: number | null) => void;
     selectedArticlePos: number | null;
     selectedArticle: IArticle | null;
     closeArticle: () => void;

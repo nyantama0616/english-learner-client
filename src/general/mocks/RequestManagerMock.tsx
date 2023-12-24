@@ -58,5 +58,22 @@ function getData(url: string) {
                     }
                 ]
             }
+        
+        case requests.fetchArticles:
+            return {
+                articles: [
+                    { id: 0, title: 'title0', wordCount: 1 },
+                    { id: 1, title: 'title1', wordCount: 1 },
+                    { id: 2, title: 'title2', wordCount: 1 },
+                ]
+            }
+        
+        case requests.fetchOneArticle(1):
+            return {
+                id: 1,
+                title: 'title1',
+                body: 'body1',
+                wordCount: 1
+            }
     }
 }

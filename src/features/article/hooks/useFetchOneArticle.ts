@@ -15,9 +15,9 @@ export default function useFetchOneArticle(requestManager: IRequestManager<Fetch
         await requestManager
             .get(requests.fetchOneArticle(id))
             .then((res) => {
-            setArticle(res);
-            setStatus(BasicStatus.Success);
-        });
+                setArticle(res);
+                setStatus(BasicStatus.Success);
+            });
     }
     return { status, article, fetch };
 }

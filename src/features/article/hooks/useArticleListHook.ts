@@ -12,6 +12,10 @@ interface Selected {
 export default function useArticleListHook(fetchArticles: IFetchArticles, fetchOneArticle: IFetchOneArticle): IArticleListHook {
     const [selected, setSelected] = useState<Selected>({ pos: null, article: null });
 
+    /*TODO:
+        ここでショートカットを登録するのはおかしい気がする
+        Component側で登録するべきだと思う
+    */
     useHotkeys('up', _selectPrevArticle, [selected]); //TODO: 第２引数はどういう意味？, ショートカットを管理するクラスを作る
     useHotkeys('down', _selectNextArticle, [selected]);
 
@@ -20,7 +24,7 @@ export default function useArticleListHook(fetchArticles: IFetchArticles, fetchO
     }, []);
 
     function selectArticle(pos: number | null) {
-        if (pos === null) {
+                if (pos === null) {
             setSelected({ pos: null, article: null });
             return;
         }
