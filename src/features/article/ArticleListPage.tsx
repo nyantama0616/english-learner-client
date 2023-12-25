@@ -8,6 +8,7 @@ import IArticle from "../../general/interfaces/IArticle";
 import CloseButton from "../../general/components/CloseButton";
 import CreateArticle from "./components/CreateArticle";
 import ICreateArticle from "./interfaces/ICreateArticle";
+import ArticleProvider from "./contexts/ArticleContext";
 
 interface ArticleListPageProps {
     sx?: SxProps;
@@ -53,11 +54,13 @@ export default function ArticleListPage({ sx }: ArticleListPageProps) {
     
     return (
         <PageTemplate className="article-list-page" sx={{ ...sx, position: "relative" }}>
-            <h1>Article List</h1>
-            <ArticleList articles={hook.fetchArticles.articles} onSelectArticle={hook.selectArticle} />
-            {articleComponent}
-            {createArticleComponent}
-            {openCreateArticleButton}
+            <ArticleProvider article={hook.selected.data.article} wordDict={hook.selected.data.words}>
+                <h1>Article List</h1>
+                <ArticleList articles={hook.fetchArticles.articles} onSelectArticle={hook.selectArticle} />
+                {articleComponent}
+                {createArticleComponent}
+                {openCreateArticleButton}
+            </ArticleProvider>
         </PageTemplate>
     )
 }

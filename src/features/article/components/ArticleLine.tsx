@@ -1,6 +1,6 @@
 import { Typography } from '@mui/material';
-import IWord from '../../../general/interfaces/IWord';
 import ArticleLib from '../lib/ArticleLib';
+import ArticleWord from './ArticleWord';
 
 type LineType = "h1" | "h2" | "h3" | "h4" | "h5" | "subtitle1" | "subtitle2" | "body1";
 
@@ -28,7 +28,7 @@ export default function ArticleLine({ text }: ArticleLineProps) {
         type = "body1";
     }
 
-    const wordComponents = ArticleLib.getChunks(displayText).map(({content, isWord}, index) => {
+    const wordComponents = ArticleLib.getChunks(displayText).map(({ content, isWord }, index) => {
         if (isWord) {
             return <ArticleWord key={index} displayWord={content} />
         } else {
@@ -48,15 +48,5 @@ export default function ArticleLine({ text }: ArticleLineProps) {
             {/* {displayText} */}
             {wordComponents}
         </Typography>
-    )
-}
-
-interface ArticleWordProps {
-    displayWord: string;
-    wordInfo?: IWord;
-}
-function ArticleWord({ displayWord, wordInfo }: ArticleWordProps) {
-    return (
-        <span>{displayWord}</span>
     )
 }
