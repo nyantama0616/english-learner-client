@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { SxProps } from "@mui/system";
-import IArticle from "../../../general/interfaces/IArticle";
-import ArticleBody from "./ArticleBody";
+import IArticle from "../../../../general/interfaces/IArticle";
+import ArticleBody from "./Body";
 
 interface ArticleProps {
     article: IArticle;

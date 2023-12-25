@@ -1,7 +1,7 @@
 import PageTemplate from "../../general/PageTemplate";
 import ArticleList from "./components/ArticleList";
 import { useDependency } from "../../general/contexts/useDependency";
-import Article from "./components/Article";
+import Article from "./components/article-parts/Article";
 import { SxProps } from "@mui/system";
 import { Box, Button } from "@mui/material";
 import IArticle from "../../general/interfaces/IArticle";

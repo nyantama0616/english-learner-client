@@ -1,13 +1,13 @@
 import { Typography } from '@mui/material';
-import ArticleLib from '../lib/ArticleLib';
-import ArticleWord from './ArticleWord';
+import ArticleLib from '../../lib/ArticleLib';
+import ArticleWord from './Word';
 
 type LineType = "h1" | "h2" | "h3" | "h4" | "h5" | "subtitle1" | "subtitle2" | "body1";
 
-interface ArticleLineProps {
+interface LineProps {
     text: string;
 }
-export default function ArticleLine({ text }: ArticleLineProps) {
+export default function Line({ text }: LineProps) {
     if (text === "\n") {
         return <br />
     }

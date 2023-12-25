@@ -2,7 +2,7 @@ import { Box, Grid, TextField, Button } from "@mui/material";
 import { SxProps } from "@mui/system";
 import IArticle from "../../../general/interfaces/IArticle";
 import ICreateArticle from "../interfaces/ICreateArticle";
-import ArticleBody from "./ArticleBody";
+import ArticleBody from "./article-parts/Body";
 
 interface CreateArticleProps {
     createArticle: ICreateArticle;
