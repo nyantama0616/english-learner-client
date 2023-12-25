@@ -13,6 +13,7 @@ describe('ArticleLib', () => {
         expect(ArticleLib.getChunks("apple-banana")).toEqual([{ content: "apple-banana", isWord: true }]);
         expect(ArticleLib.getChunks("apple banana.")).toEqual([{ content: "apple", isWord: true }, { content: " ", isWord: false }, { content: "banana", isWord: true }, { content: ".", isWord: false }]);
         expect(ArticleLib.getChunks("\"giant\", panda")).toEqual([{ content: "\"", isWord: false }, { content: "giant", isWord: true }, { content: "\", ", isWord: false }, { content: "panda", isWord: true }]);
+        expect(ArticleLib.getChunks("It's good")).toEqual([{ content: "It", isWord: true }, { content: "'", isWord: false }, { content: "s", isWord: true }, { content: " ", isWord: false }, { content: "good", isWord: true }]);
     });
 
     test("split", () => {
