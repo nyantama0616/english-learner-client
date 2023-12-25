@@ -73,7 +73,7 @@ interface ArticleWrapperProps {
 function ArticleWrapper({ article, onClose, sx }: ArticleWrapperProps) {
     return (
         <Box sx={{ ...sx }}>
-            <Article article={article} sx={{ width: "100%", height: "100%" }} />
+            <Article sx={{ width: "100%", height: "100%" }} />
             <CloseButton onClick={onClose} sx={{ position: "absolute", top: "0", right: "0" }} />
         </Box>
     )
