@@ -9,7 +9,7 @@ interface LineProps {
 }
 export default function Line({ text }: LineProps) {
     if (text === "\n") {
-        return <br />
+        return <br/>
     }
 
     let displayText: string;

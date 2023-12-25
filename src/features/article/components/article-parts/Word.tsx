@@ -28,7 +28,7 @@ export default function Word({ displayWord }: WordProps) {
         )
     } else {
         return (
-            <>{displayWord} </>
+            <>{displayWord}</>
         )
     }
 }
