@@ -23,12 +23,16 @@ interface DependencyContextType {
     wordListHook: IWordListHook;
     wordInfoEditorHook: IWordInfoEditorHook;
     articleListHook: IArticleListHook;
+    useUpdateWords: typeof useUpdateWords;
+    RequestManager: typeof RequestManager;
 }
 
 const initialValue: DependencyContextType = {
     wordListHook: null!,
     wordInfoEditorHook: null!,
     articleListHook: null!,
+    useUpdateWords: null!,
+    RequestManager: null!,
 }
 
 const DependencyContext = createContext<DependencyContextType>(initialValue);
@@ -46,8 +50,7 @@ export function DependencyProvider({ children }: DependencyProviderProps) {
     const fetchWords = useFetchWords(fetchRequestManager);
     const wordInfoEditorHook = useWordInfoEditorHook();
     const updateRequestManager = new RequestManager<UpdateWordsRequest, UpdateWordsResponse>();
-    const updateWords = useUpdateWords(updateRequestManager);
-    const wordListHook = useWordListHook(fetchWords, updateWords);
+    const wordListHook = useWordListHook(fetchWords);
 
     const fetchArticleWords = useFetchArticles(RequestManager);
     const fetchOneArticle = useFetchOneArticle(RequestManager, RequestManager);
@@ -58,6 +61,8 @@ export function DependencyProvider({ children }: DependencyProviderProps) {
         wordListHook,
         wordInfoEditorHook,
         articleListHook,
+        useUpdateWords,
+        RequestManager,
     }
     
     return (

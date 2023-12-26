@@ -8,5 +8,5 @@ export default interface IWordListHook {
         word: IWord | null;
     };
     selectedWordPos: number | null;
-    selectWord: (pos: number) => void;
+    selectWord: (pos: number | null) => void;
 }

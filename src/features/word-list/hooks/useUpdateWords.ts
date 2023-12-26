@@ -9,17 +9,21 @@ import requests from "../../../general/requests";
 
 type Datum = { [wordId: number]: WordInfoEditorData };
 
-export default function useUpdateWords(requestManager: IRequestManager<UpdateWordsRequest, UpdateWordsResponse>): IUpdateWords {
+export default function useUpdateWords<T extends new () => IRequestManager<UpdateWordsRequest, UpdateWordsResponse>>(RequestManager: T): IUpdateWords {
+    const requestManager = new RequestManager();
+
     const [status, setStatus] = useState(BasicStatus.Idle);
     const datumRef = useRef<Datum>({});
 
     async function update() {
+        if (Object.keys(datumRef.current).length === 0) return;
+
         setStatus(BasicStatus.Doing);
         await requestManager
             .patch(requests.updateWords, { datum: Object.values(datumRef.current) })
             .then(() => {
                 setStatus(BasicStatus.Success);
-                datumRef.current = [];
+                datumRef.current = {};
             });
     }
 

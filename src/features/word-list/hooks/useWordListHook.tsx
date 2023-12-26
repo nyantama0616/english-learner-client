@@ -5,27 +5,12 @@ import { useState } from "react";
 import { useHotkeys } from 'react-hotkeys-hook'
 import IUpdateWords from "../interfaces/IUpdateWords";
 
-export default function useWordList(fetchWords: IFetchWords, updateWords: IUpdateWords): IWordListHook {
+export default function useWordList(fetchWords: IFetchWords): IWordListHook {
     const [selectedWordPos, setSelectedWordPos] = useState<number | null>(null);
     useHotkeys('up', _selectPrevWord, [selectedWordPos]); //TODO: 第２引数はどういう意味？, ショートカットを管理するクラスを作る
     useHotkeys('down', _selectNextWord, [selectedWordPos]);
 
-    useEffect(() => {
-        _fetch();
-    }, []);
-
-    const selectWord = function(pos: number | null) {
-        // if (!wordInfoEditorHook.isValid()) return; //validationに引っかかったら何もしない
-        
-        // if (wordInfoEditorHook.edited) {
-        //     updateWords.push({ ...wordInfoEditorHook.data });
-        //     updateWords
-        //         .update()
-        //         .then(() => {
-        //             _fetch();
-        //         });
-        // }
-
+    function selectWord(pos: number | null) {
         if (pos === null) {
             setSelectedWordPos(null);
             return;
@@ -35,9 +20,6 @@ export default function useWordList(fetchWords: IFetchWords, updateWords: IUpdat
             throw new Error(`pos must be between 0 and ${fetchWords.words.length - 1}`);
         };
 
-        // const word = fetchWords.words[pos];
-        
-        // wordInfoEditorHook.init({ ...word });
         setSelectedWordPos(pos);
     }
 
@@ -51,13 +33,6 @@ export default function useWordList(fetchWords: IFetchWords, updateWords: IUpdat
         selectWord(selectedWordPos + 1);
     }
 
-    function _fetch() {
-        const params = {
-            limit: 20,
-            minStatFrequency: 2.0,
-        }
-        fetchWords.fetch(params);
-    }
 
     return {
         fetchWords,
