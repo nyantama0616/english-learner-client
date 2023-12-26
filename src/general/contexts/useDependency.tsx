@@ -47,7 +47,7 @@ export function DependencyProvider({ children }: DependencyProviderProps) {
     const wordInfoEditorHook = useWordInfoEditorHook();
     const updateRequestManager = new RequestManager<UpdateWordsRequest, UpdateWordsResponse>();
     const updateWords = useUpdateWords(updateRequestManager);
-    const wordListHook = useWordListHook(fetchWords, wordInfoEditorHook, updateWords);
+    const wordListHook = useWordListHook(fetchWords, updateWords);
 
     const fetchArticleWords = useFetchArticles(RequestManager);
     const fetchOneArticle = useFetchOneArticle(RequestManager, RequestManager);

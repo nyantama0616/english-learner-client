@@ -1,30 +1,28 @@
 import { Box, Grid, TextField, Checkbox } from "@mui/material";
 import { SxProps } from "@mui/system";
-import { useEffect } from "react";
-import IWord from "../../../general/interfaces/IWord";
-import IWordInfoEditorHook from "../interfaces/IWordInfoEditorHook";
+import { useWord } from "../../contexts/WordContext";
 
 interface WordInfoEditorProps {
-    word: IWord;
-    hook: IWordInfoEditorHook;
     sx?: SxProps;
 }
-export default function WordInfoEditor({ word, hook, sx }: WordInfoEditorProps) {
+export default function WordInfoEditor({ sx }: WordInfoEditorProps) {
+    const { word, wordInfoEditorHook } = useWord();
+    
     return (
         <Box sx={{ ...sx }}>
             <Grid container justifyContent="center">
                 <Grid item xs={10}>
-                    <h1>{word.word}</h1>
+                    <h1>{word?.word}</h1>
                 </Grid>
                 
                 <Grid item xs={10}>
-                    <h3>{word.statFrequency}</h3>
+                    <h3>{word?.statFrequency}</h3>
                 </Grid>
                 
                 <Grid item xs={2}>
                     <Checkbox
-                        checked={hook.data.reported}
-                        onChange={hook.onReportedChange}
+                        checked={wordInfoEditorHook.data.reported}
+                        onChange={wordInfoEditorHook.onReportedChange}
                     />
                 </Grid>
                 
@@ -32,8 +30,8 @@ export default function WordInfoEditor({ word, hook, sx }: WordInfoEditorProps) 
                     <form>
                         <TextField
                             label="意味"
-                            value={hook.data.meaning}
-                            onChange={hook.onMeaningChange}
+                            value={wordInfoEditorHook.data.meaning}
+                            onChange={wordInfoEditorHook.onMeaningChange}
                             variant="outlined"
                             fullWidth
                         />

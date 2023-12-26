@@ -1,14 +1,19 @@
 import { Box } from "@mui/material";
 import { SxProps } from "@mui/system";
 import IFrame from "react-iframe";
+import requests from "../../../../general/requests";
 
 interface WordViewerProps {
     wordName: string;
     sx?: SxProps;
 }
 export default function WeblioWindow({ wordName, sx }: WordViewerProps) {
-    const url = `https://ejje.weblio.jp/content/${wordName}`;
+    const url = requests.weblio(wordName);    
 
+    /*
+        TODO: weblioのページのエラーがコンソールに出力されるので、それをなんとかする
+        多分どうにもならないｗ
+    */
     return (
         <Box sx={{ ...sx }}>
             <IFrame

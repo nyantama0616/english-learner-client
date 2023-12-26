@@ -1,10 +1,12 @@
 import IFetchWords from "./IFetchWords";
-import IWordInfoEditorHook from "./IWordInfoEditorHook";
+import IWord from "../../../general/interfaces/IWord";
 
 export default interface IWordListHook {
     fetchWords: IFetchWords;
-    wordInfoEditorHook: IWordInfoEditorHook;
+    selected: {
+        pos: number | null;
+        word: IWord | null;
+    };
     selectedWordPos: number | null;
     selectWord: (pos: number) => void;
-    closeWordViewer: () => void;
 }
