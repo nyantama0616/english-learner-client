@@ -12,7 +12,7 @@ export default function ArticleList({ articles, onSelectArticle ,sx }: ArticleLi
     const items = articles.map((article, i) => <ArticleListItem key={i.toString()} articleTitle={article.title} onClick={() => { onSelectArticle(i) }} />);
     
     return (
-        <Box sx={{ ...sx }}>
+        <Box sx={{ ...sx, overflowY: "scroll" }}>
             <List>
                 {items}
             </List>

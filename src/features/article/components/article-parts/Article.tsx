@@ -35,7 +35,7 @@ export default function Article({ sx }: ArticleProps) {
                     sx={{
                         backgroundColor: "lightblue",
                         width: "120%",
-                        height: "800px",
+                        height: "600px",
                         position: "absolute",
                         top: "50%",
                         left: "50%",
