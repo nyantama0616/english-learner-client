@@ -1,4 +1,4 @@
-import WordInfoEditorHook from "../interfaces/IWordInfoEditorHook";
+import IWordInfoEditorHook from "../interfaces/IWordInfoEditorHook";
 import WordInfoEditorData from "../types/WordInfoEditorData";
 import IWord from "../../../general/interfaces/IWord";
 import { useState } from "react";
@@ -13,7 +13,7 @@ interface State {
     data: WordInfoEditorData;
     edited: boolean;
 }
-export default function useWordInfoEditor(): WordInfoEditorHook {
+export default function useWordInfoEditor(): IWordInfoEditorHook {
     const [{ edited, data }, setState] = useState<State>({
         edited: false,
         data: initialData,

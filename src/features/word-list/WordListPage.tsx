@@ -26,25 +26,19 @@ interface MainProps extends WordListPageProps {
     hook: IWordListHook;
 }
 function Main({ sx, hook }: MainProps) {
-    const { useUpdateWords, RequestManager } = useDependency();
-
-    const updateWords = useUpdateWords(RequestManager);
-    const { toggle, wordInfoEditorHook, display } = useWord();
+    const { toggle, updateWords, display } = useWord();
 
     useEffect(() => {
-        if (wordInfoEditorHook.edited) {
-            updateWords.push({ ...wordInfoEditorHook.data });
-            updateWords
-                .update()
-                .then(() => {
-                    _fetch();
-                });
-        }
+        updateWords
+            .update()
+            .then(() => {
+                _fetch();
+            });
         
         if (hook.selected.word === null) return;
         
-        wordInfoEditorHook.init({ ...hook.selected.word });
-    }, [hook.selected.word]);
+        updateWords.wordInfoEditor.init({ ...hook.selected.word });
+    }, [hook.selected.pos]);
     
     useEffect(() => {
         if (!display.wordViewer) {

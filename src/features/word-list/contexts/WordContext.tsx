@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from "react";
 import IWord from "../../../general/interfaces/IWord";
-import IWordInfoEditorHook from "../interfaces/IWordInfoEditorHook";
 import { useDependency } from "../../../general/contexts/DependencyContext";
+import IUpdateWords from "../interfaces/IUpdateWords";
 
 interface WordContextType {
     word: IWord | null;
@@ -15,14 +15,16 @@ interface WordContextType {
         wordInfoEditor: (display: boolean) => void;
         weblioWindow: (display: boolean) => void;
     };
-    wordInfoEditorHook: IWordInfoEditorHook;
+    // wordInfoEditorHook: IWordInfoEditorHook;
+    updateWords: IUpdateWords;
 }
 
 const initialValue: WordContextType = {
     word: null!,
     display: null!,
     toggle: null!,
-    wordInfoEditorHook: null!,
+    // wordInfoEditorHook: null!,
+    updateWords: null!,
 }
 
 const WordContext = createContext<WordContextType>(initialValue);
@@ -36,7 +38,7 @@ interface WordProviderProps {
     children: React.ReactNode;
 }
 export function WordProvider({ word, children }: WordProviderProps) {
-    const { useWordInfoEditorHook } = useDependency();
+    const { useWordInfoEditorHook, useUpdateWords, RequestManager } = useDependency();
     
     const [display, setDisplay] = useState({
         wordViewer: false,
@@ -45,6 +47,7 @@ export function WordProvider({ word, children }: WordProviderProps) {
     });
 
     const wordInfoEditorHook = useWordInfoEditorHook();
+    const updateWords = useUpdateWords(RequestManager, wordInfoEditorHook);
 
     const toggle = {
         wordViewer: (flag: boolean) => setDisplay({ ...display, wordViewer: flag }),
@@ -53,7 +56,7 @@ export function WordProvider({ word, children }: WordProviderProps) {
     }
 
     return (
-        <WordContext.Provider value={{ word, display, toggle, wordInfoEditorHook }}>
+        <WordContext.Provider value={{ word, display, toggle, updateWords }}>
             { children }
         </WordContext.Provider>
     )
