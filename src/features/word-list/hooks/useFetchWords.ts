@@ -7,7 +7,8 @@ import FetchWordsResponse from "../types/FetchWordsResponse";
 import requests from "../../../general/requests";
 import IWord from "../../../general/interfaces/IWord";
 
-export default function useFetchWords(requestManager: IRequestManager<FetchWordsRequest, FetchWordsResponse>): IFetchWords {
+export default function useFetchWords<T extends new () => IRequestManager<FetchWordsRequest, FetchWordsResponse>>(RequestManager: T): IFetchWords {
+    const requestManager = new RequestManager();
     const [status, setStatus] = useState(BasicStatus.Idle);
     const [words, setWords] = useState<IWord[]>([]);
 

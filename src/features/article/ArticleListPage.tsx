@@ -1,6 +1,6 @@
 import PageTemplate from "../../general/PageTemplate";
 import ArticleList from "./components/ArticleList";
-import { useDependency } from "../../general/contexts/useDependency";
+import { useDependency } from "../../general/contexts/DependencyContext";
 import Article from "./components/article-parts/Article";
 import { SxProps } from "@mui/system";
 import { Box, Button } from "@mui/material";
@@ -14,7 +14,8 @@ interface ArticleListPageProps {
     sx?: SxProps;
 }
 export default function ArticleListPage({ sx }: ArticleListPageProps) {
-    const hook = useDependency().articleListHook;
+    const { useArticleListHook, useFetchArticles, useCreateArticle, RequestManager, useFetchOneArticle} = useDependency();
+    const hook = useArticleListHook(useFetchArticles(RequestManager), useFetchOneArticle(RequestManager, RequestManager),useCreateArticle(RequestManager));
 
     const articleComponent = hook.displayFlag.article && hook.selected.data.article
         ? <ArticleWrapper

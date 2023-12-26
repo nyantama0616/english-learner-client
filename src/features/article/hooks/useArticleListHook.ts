@@ -3,7 +3,6 @@ import IArticleListHook from "../interfaces/IArticleListHook";
 import IFetchArticles from "../interfaces/IFetchArticles";
 import { useHotkeys } from "react-hotkeys-hook";
 import IFetchOneArticle from "../interfaces/IFetchOneArticle";
-import IArticle from "../../../general/interfaces/IArticle";
 import ICreateArticle from "../interfaces/ICreateArticle";
 
 interface State {

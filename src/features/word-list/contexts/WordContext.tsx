@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from "react";
 import IWord from "../../../general/interfaces/IWord";
 import IWordInfoEditorHook from "../interfaces/IWordInfoEditorHook";
-import useWordInfoEditorHook from "../hooks/useWordInfoEditorHook";
+import { useDependency } from "../../../general/contexts/DependencyContext";
 
 interface WordContextType {
     word: IWord | null;
@@ -36,6 +36,8 @@ interface WordProviderProps {
     children: React.ReactNode;
 }
 export function WordProvider({ word, children }: WordProviderProps) {
+    const { useWordInfoEditorHook } = useDependency();
+    
     const [display, setDisplay] = useState({
         wordViewer: false,
         wordInfoEditor: false,

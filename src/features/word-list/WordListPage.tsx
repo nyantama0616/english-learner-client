@@ -2,26 +2,32 @@ import { SxProps } from "@mui/system";
 import PageTemplate from "../../general/PageTemplate";
 import WordList from "./components/WordList";
 import WordViewer from "./components/word-parts/WordViewer";
-import { useDependency } from "../../general/contexts/useDependency";
+import { useDependency } from "../../general/contexts/DependencyContext";
 import { WordProvider, useWord } from "./contexts/WordContext";
 import { useEffect } from "react";
+import IWordListHook from "./interfaces/IWordListHook";
 
 interface WordListPageProps {
     sx?: SxProps;
 }
 export default function WordListPage({ sx }: WordListPageProps) {
-    const hook = useDependency().wordListHook;
+    const { useWordListHook, useFetchWords, RequestManager } = useDependency();
+    const hook = useWordListHook(useFetchWords(RequestManager));
     const word = hook.selectedWordPos !== null ? hook.fetchWords.words[hook.selectedWordPos] : null;
 
     return (
         <WordProvider word={word}>
-            <Main sx={sx} />
+            <Main hook={hook} sx={sx} />
         </WordProvider>
     )
 }
 
-function Main({ sx }: WordListPageProps) {
-    const { wordListHook, useUpdateWords, RequestManager } = useDependency();
+interface MainProps extends WordListPageProps {
+    hook: IWordListHook;
+}
+function Main({ sx, hook }: MainProps) {
+    const { useUpdateWords, RequestManager } = useDependency();
+
     const updateWords = useUpdateWords(RequestManager);
     const { toggle, wordInfoEditorHook, display } = useWord();
 
@@ -35,14 +41,14 @@ function Main({ sx }: WordListPageProps) {
                 });
         }
         
-        if (wordListHook.selected.word === null) return;
+        if (hook.selected.word === null) return;
         
-        wordInfoEditorHook.init({ ...wordListHook.selected.word });
-    }, [wordListHook.selected.word]);
+        wordInfoEditorHook.init({ ...hook.selected.word });
+    }, [hook.selected.word]);
     
     useEffect(() => {
         if (!display.wordViewer) {
-            wordListHook.selectWord(null);
+            hook.selectWord(null);
         }
     }, [display.wordViewer]);
 
@@ -55,18 +61,18 @@ function Main({ sx }: WordListPageProps) {
             limit: 20,
             minStatFrequency: 2.0,
         }
-        wordListHook.fetchWords.fetch(params);
+        hook.fetchWords.fetch(params);
     }
 
     function _selectWord(pos: number) {
         toggle.wordViewer(true);
-        wordListHook.selectWord(pos);
+        hook.selectWord(pos);
     }
     
     return (
         <PageTemplate className="home-page" sx={{ ...sx, position: "relative" }}>
             <h1>Word List</h1>
-            <WordList words={wordListHook.fetchWords.words} onSelectWord={_selectWord} sx={{ backgroundColor: "#eeeeee" }} />
+            <WordList words={hook.fetchWords.words} onSelectWord={_selectWord} sx={{ backgroundColor: "#eeeeee" }} />
             <WordViewer
                 sx={{
                     backgroundColor: "lightblue",

@@ -6,7 +6,7 @@ import HomePage from './features/home/HomePage';
 import WordListPage from './features/word-list/WordListPage';
 import ArticleListPage from './features/article/ArticleListPage';
 
-import { DependencyProvider } from './general/contexts/useDependency';
+import { DependencyProvider } from './general/contexts/DependencyContext';
 
 import './App.css';
 
