@@ -72,7 +72,7 @@ function getData(url: string) {
                 wordCount: 1
             }
         
-        case requests.fetchArticleWords(1):
+        case requests.fetchArticleWordDict(1):
             return {
                 words: {
                     "apple": { id: 0, word: 'apple', realFrequency: 100, statFrequency: 100, pronunciation: 'apple', meaning: 'りんご' },

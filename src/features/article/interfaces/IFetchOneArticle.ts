@@ -10,7 +10,7 @@ export default interface IFetchOneArticle {
 
 export type Data = {
     article: IArticle | null;
-    words: {
+    wordDict: {
         [word: string]: IWord;
     };
 }

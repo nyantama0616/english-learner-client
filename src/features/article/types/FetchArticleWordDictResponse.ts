@@ -1,9 +1,9 @@
 import IWord from "../../../general/interfaces/IWord";
 
-export type FetchArticleWordsResponse = {
+export type FetchArticleWordDictResponse = {
     words: {
         [word: string]: IWord;
     }
 }
 
-export default FetchArticleWordsResponse;
+export default FetchArticleWordDictResponse;

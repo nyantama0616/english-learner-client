@@ -4,24 +4,22 @@ import BasicStatus from "../../../general/types/BasicStatus";
 import requests from "../../../general/requests";
 import FetchOneArticleRequest from "../types/FetchOneArticleRequest";
 import FetchOneArticleResponse from "../types/FetchOneArticleResponse";
-import IArticle from "../../../general/interfaces/IArticle";
-import IWord from "../../../general/interfaces/IWord";
 import IFetchOneArticle, { Data } from "../interfaces/IFetchOneArticle";
-import FetchArticleWordsRequest from "../types/FetchArticleWordsRequest";
-import FetchArticleWordsResponse from "../types/FetchArticleWordsResponse";
+import FetchArticleWordDictRequest from "../types/FetchArticleWordDictRequest";
+import FetchArticleWordDictResponse from "../types/FetchArticleWordDictResponse";
 
 export default function useFetchOneArticle<
     T extends new () => IRequestManager<FetchOneArticleRequest, FetchOneArticleResponse>,
-    U extends new () => IRequestManager<FetchArticleWordsRequest, FetchArticleWordsResponse>
+    U extends new () => IRequestManager<FetchArticleWordDictRequest, FetchArticleWordDictResponse>
 >(
     FetchOneRequestManager: T,
-    FetchWordsRequestManager: U
+    FetchWordDictRequestManager: U
 ) : IFetchOneArticle {
     const [status, setStatus] = useState(BasicStatus.Idle);
-    const [data, setData] = useState<Data>({ article: null, words: {} });
+    const [data, setData] = useState<Data>({ article: null, wordDict: {} });
 
     const fetchOneRequestManager = new FetchOneRequestManager();
-    const fetchWordsRequestManager = new FetchWordsRequestManager();
+    const fetchWordDictRequestManager = new FetchWordDictRequestManager();
     
     async function fetch(id: number) {
         setStatus(BasicStatus.Doing);
@@ -33,13 +31,13 @@ export default function useFetchOneArticle<
             })
             .then(() => {
                 setStatus(BasicStatus.Doing);
-                fetchWordsRequestManager
-                    .get(requests.fetchArticleWords(id))
+                fetchWordDictRequestManager
+                    .get(requests.fetchArticleWordDict(id))
                     .then((res) => {
                         console.log(res);
                         
                         setData(prev => {
-                            return { ...prev, words: res!.words }
+                            return { ...prev, wordDict: res!.words }
                         });
                         setStatus(BasicStatus.Success);
                     });

@@ -37,7 +37,7 @@ describe('useArticleListHook', () => {
         
         expect(result.current.selected.pos).toEqual(1);
         expect(result.current.selected.data.article).toEqual({ id: 1, title: 'title1', body: 'body1', wordCount: 1 });
-        expect(result.current.selected.data.words).toEqual({
+        expect(result.current.selected.data.wordDict).toEqual({
             "apple": { id: 0, word: 'apple', realFrequency: 100, statFrequency: 100, pronunciation: 'apple', meaning: 'りんご' },
         });
 
