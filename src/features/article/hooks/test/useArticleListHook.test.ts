@@ -12,7 +12,7 @@ describe('useArticleListHook', () => {
     beforeEach(async () => {
         result = renderHook(() => {
             const fetchArticles = useFetchArticles(RequestManagerMock);
-            const fetchOneArticle = useFetchOneArticle(RequestManagerMock, RequestManagerMock);
+            const fetchOneArticle = useFetchOneArticle(RequestManagerMock, RequestManagerMock, RequestManagerMock);
             const createArticle = useCreateArticle(RequestManagerMock);
             return useArticleListHook(fetchArticles, fetchOneArticle, createArticle);
         }).result;

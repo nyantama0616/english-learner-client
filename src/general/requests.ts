@@ -4,6 +4,7 @@ const requests = {
     fetchArticles: "http://localhost:3000/v1/articles",
     fetchOneArticle: (id: number) => `http://localhost:3000/v1/articles/${id}`,
     fetchArticleWordDict: (id: number) => `http://localhost:3000/v1/articles/${id}/word_dict`,
+    fetchArticleWords: (id: number) => `http://localhost:3000/v1/articles/${id}/words`,
     createArticle: "http://localhost:3000/v1/articles",
     // weblio: (word: string) => `http://localhost:3000/v1/weblio/${word}`,
     weblio: (word: string) => `https://ejje.weblio.jp/content/${word}`,

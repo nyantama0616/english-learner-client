@@ -15,7 +15,7 @@ interface ArticleListPageProps {
 }
 export default function ArticleListPage({ sx }: ArticleListPageProps) {
     const { useArticleListHook, useFetchArticles, useCreateArticle, RequestManager, useFetchOneArticle} = useDependency();
-    const hook = useArticleListHook(useFetchArticles(RequestManager), useFetchOneArticle(RequestManager, RequestManager),useCreateArticle(RequestManager));
+    const hook = useArticleListHook(useFetchArticles(RequestManager), useFetchOneArticle(RequestManager, RequestManager, RequestManager),useCreateArticle(RequestManager));
 
     const articleComponent = hook.displayFlag.article && hook.selected.data.article
         ? <ArticleWrapper

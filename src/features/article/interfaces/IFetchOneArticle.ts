@@ -13,4 +13,5 @@ export type Data = {
     wordDict: {
         [word: string]: IWord;
     };
+    words: IWord[]
 }
