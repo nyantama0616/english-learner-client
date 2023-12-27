@@ -55,7 +55,7 @@ export default function ArticleListPage({ sx }: ArticleListPageProps) {
     
     return (
         <PageTemplate className="article-list-page" sx={{ ...sx, position: "relative" }}>
-            <ArticleProvider article={hook.selected.data.article} wordDict={hook.selected.data.wordDict}>
+            <ArticleProvider article={hook.selected.data.article} wordDict={hook.selected.data.wordDict} words={hook.selected.data.words}>
                 <h1>Article List</h1>
                 <ArticleList articles={hook.fetchArticles.articles} onSelectArticle={hook.selectArticle} sx={{height: "860px"}} />
                 {articleComponent}

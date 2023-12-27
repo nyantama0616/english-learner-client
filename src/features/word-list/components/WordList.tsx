@@ -12,7 +12,7 @@ export default function WordList({ words, onSelectWord, sx }: WordListProps) {
     const items = words.map((word, i) => <WordListItem key={i.toString()} wordName={word.word} onClick={ () => {onSelectWord(i)} } />);
 
     return (
-        <Box sx={{...sx}}>
+        <Box sx={{...sx, overflowY: "scroll"}}>
             <List>
                 {items}
             </List>
