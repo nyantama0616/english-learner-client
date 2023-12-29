@@ -1,14 +1,13 @@
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { SxProps } from "@mui/system";
 import ArticleBody from "./Body";
 import CopyButton from "./CopyButton";
 import { useArticle } from "../../contexts/ArticleContext";
 import { WordProvider } from "../../../word-list/contexts/WordContext";
 import WordViewer from "../../../word-list/components/word-parts/WordViewer";
-import WordList from "../../../word-list/components/WordList";
-import { useWord } from "../../../word-list/contexts/WordContext";
 import IconButton from "../../../../general/components/IconButton";
 import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList';
+import WordListViewer from "./WordListViewer";
 
 interface ArticleProps {
     sx?: SxProps;
@@ -19,7 +18,7 @@ export default function Article({ sx }: ArticleProps) {
     if (article === null) return null;
 
     const wordList = display.wordList
-        ? <WordListWrapper
+        ? <WordListViewer
             sx={{
                 backgroundColor: "#eeeeee",
                 width: "50%",
@@ -68,24 +67,5 @@ export default function Article({ sx }: ArticleProps) {
                 />
             </WordProvider>
         </Box>
-    )
-}
-
-interface WordListWrapperProps {
-    sx?: SxProps;
-}
-function WordListWrapper({ sx }: WordListWrapperProps) {
-    const { words, selectWord } = useArticle();
-    const { toggle } = useWord();
-    return (
-        <WordList
-            words={words}
-            onSelectWord={(pos: number) => {
-                const word = words[pos] || null;
-                selectWord(word);
-                toggle.wordViewer(true);
-            }}
-            sx={sx}
-        />
     )
 }
