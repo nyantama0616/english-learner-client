@@ -7,14 +7,30 @@ import { WordProvider } from "../../../word-list/contexts/WordContext";
 import WordViewer from "../../../word-list/components/word-parts/WordViewer";
 import WordList from "../../../word-list/components/WordList";
 import { useWord } from "../../../word-list/contexts/WordContext";
+import IconButton from "../../../../general/components/IconButton";
+import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList';
 
 interface ArticleProps {
     sx?: SxProps;
 }
 export default function Article({ sx }: ArticleProps) {
-    const { article, copyArticle, currentWord } = useArticle();
+    const { article, copyArticle, currentWord, display, toggle } = useArticle();
 
     if (article === null) return null;
+
+    const wordList = display.wordList
+        ? <WordListWrapper
+            sx={{
+                backgroundColor: "#eeeeee",
+                width: "50%",
+                height: "600px",
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+            }}
+        />
+        : null;
 
     return (
         <Box className="article" sx={{ ...sx }}>
@@ -22,6 +38,9 @@ export default function Article({ sx }: ArticleProps) {
                 <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100%"}}>
                     <Typography variant="h1" fontSize="3rem">{article.title}</Typography>
                     <CopyButton status={copyArticle.status} onClick={copyArticle.copy} />
+                    <IconButton title="Word List" onClick={() => { toggle.wordList(!display.wordList) }} sx={{color: "black"}}>
+                        <FeaturedPlayListIcon />
+                    </IconButton>
                 </Box>
 
                 <ArticleBody
@@ -34,17 +53,7 @@ export default function Article({ sx }: ArticleProps) {
                     }}
                 />
 
-                <WordListWrapper
-                    sx={{
-                        backgroundColor: "#eeeeee",
-                        width: "50%",
-                        height: "600px",
-                        position: "absolute",
-                        top: "50%",
-                        left: "50%",
-                        transform: "translate(-50%, -50%)",
-                    }}
-                />
+                {wordList}
 
                 <WordViewer
                     sx={{

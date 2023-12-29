@@ -12,6 +12,12 @@ interface ArticleContextType {
         status: BasicStatus;
         copy: () => void;
     };
+    display: {
+        wordList: boolean;
+    };
+    toggle: {
+        wordList: (flag: boolean) => void;
+    };
     currentWord: IWord | null;
     selectWord: (word: IWord | null) => void;
 }
@@ -23,6 +29,12 @@ const initialValue: ArticleContextType = {
     copyArticle: {
         status: BasicStatus.Idle,
         copy: () => {},
+    },
+    display: {
+        wordList: false,
+    },
+    toggle: {
+        wordList: () => {},
     },
     currentWord: null,
     selectWord: null!,
@@ -44,6 +56,7 @@ export default function ArticleProvider({ article, wordDict, words, children }: 
     const [copyArticleStatus, setCopyArticleStatus] = useState<BasicStatus>(BasicStatus.Idle);
     const [_, copyToClipboard] = useCopyToClipboard();
     const [currentWord, setCurrentWord] = useState<IWord | null>(null);
+    const [display, setDisplay] = useState<{ wordList: boolean }>({ wordList: false });
 
     const value: ArticleContextType = {
         article,
@@ -52,6 +65,10 @@ export default function ArticleProvider({ article, wordDict, words, children }: 
         copyArticle: {
             status: copyArticleStatus,
             copy: copyArticle,
+        },
+        display,
+        toggle: {
+            wordList: (flag: boolean) => setDisplay({ wordList: flag }),
         },
         currentWord,
         selectWord,
