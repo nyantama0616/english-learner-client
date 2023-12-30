@@ -4,6 +4,15 @@ import IWord from "../../../general/interfaces/IWord";
 import BasicStatus from "../../../general/types/BasicStatus";
 import { useCopyToClipboard } from "usehooks-ts";
 
+interface Display {
+    wordList: boolean;
+    articleInfo: boolean;
+}
+
+interface Toggle {
+    wordList: (flag: boolean) => void;
+    articleInfo: (flag: boolean) => void;
+}
 interface ArticleContextType {
     article: IArticle | null;
     wordDict: { [word: string]: IWord };
@@ -12,12 +21,8 @@ interface ArticleContextType {
         status: BasicStatus;
         copy: () => void;
     };
-    display: {
-        wordList: boolean;
-    };
-    toggle: {
-        wordList: (flag: boolean) => void;
-    };
+    display: Display;
+    toggle: Toggle;
     currentWord: IWord | null;
     selectWord: (word: IWord | null) => void;
 }
@@ -32,9 +37,11 @@ const initialValue: ArticleContextType = {
     },
     display: {
         wordList: false,
+        articleInfo: false,
     },
     toggle: {
-        wordList: () => {},
+        wordList: () => { },
+        articleInfo: () => { },
     },
     currentWord: null,
     selectWord: null!,
@@ -56,7 +63,7 @@ export default function ArticleProvider({ article, wordDict, words, children }: 
     const [copyArticleStatus, setCopyArticleStatus] = useState<BasicStatus>(BasicStatus.Idle);
     const [_, copyToClipboard] = useCopyToClipboard();
     const [currentWord, setCurrentWord] = useState<IWord | null>(null);
-    const [display, setDisplay] = useState<{ wordList: boolean }>({ wordList: false });
+    const [display, setDisplay] = useState<Display>({ wordList: false, articleInfo: false });
 
     const value: ArticleContextType = {
         article,
@@ -68,7 +75,8 @@ export default function ArticleProvider({ article, wordDict, words, children }: 
         },
         display,
         toggle: {
-            wordList: (flag: boolean) => setDisplay({ wordList: flag }),
+            wordList: (flag: boolean) => setDisplay({ ...display, wordList: flag }),
+            articleInfo: (flag: boolean) => setDisplay({ ...display, articleInfo: flag }),
         },
         currentWord,
         selectWord,

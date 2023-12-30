@@ -1,3 +1,5 @@
+import IArticle from "../../../general/interfaces/IArticle";
+import IWord from "../../../general/interfaces/IWord";
 import WordChunk from "../interfaces/Chunk";
 
 export namespace ArticleLib {
@@ -60,6 +62,19 @@ export namespace ArticleLib {
         }
 
         return result;
+    }
+
+    //TODO: この単語の数え方は微妙... サーバー側で数えるかな
+    export function calcFreqWordCount(article: IArticle, wordDict: {[word: string]: IWord}, minFrequency: number): number {
+        const chunks = getChunks(`${article.title} ${article.body}`);
+        let count = 0;
+        
+        for (const chunk of chunks) {
+            if (chunk.isWord && wordDict[chunk.content.toLowerCase()]?.statFrequency >= minFrequency) {
+                count++;
+            }
+        }
+        return count;
     }
 }
 
